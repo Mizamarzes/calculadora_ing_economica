@@ -1,0 +1,292 @@
+# Diseño, desarrollo y validación de una calculadora financiera para Ingeniería Económica
+
+## 1. Presentación del proyecto
+
+Como actividad integradora del curso, cada grupo deberá diseñar, desarrollar y validar una calculadora financiera que permita resolver operaciones fundamentales de Ingeniería Económica.
+
+El proyecto busca que los estudiantes integren los conceptos trabajados durante el semestre y los traduzcan en una herramienta funcional que permita realizar cálculos relacionados con:
+
+- interés compuesto;
+- conversión de tasas de interés;
+- tasas indexadas;
+- anualidades vencidas;
+- anualidades anticipadas;
+- anualidades perpetuas.
+
+La calculadora deberá producir resultados financieramente correctos y permitir al usuario identificar con claridad los datos que debe ingresar, las unidades empleadas, la periodicidad de las tasas y el resultado obtenido.
+
+El proyecto no será evaluado únicamente por su apariencia o por la existencia de botones, menús o formularios. El elemento principal de evaluación será que las operaciones financieras hayan sido correctamente implementadas y comprobadas.
+
+## 2. Modalidad de trabajo
+
+El proyecto deberá realizarse en los grupos definidos al inicio del semestre.
+
+No se conformarán nuevos grupos exclusivamente para esta actividad.
+
+Cada grupo será responsable de la totalidad del producto entregado y deberá distribuir internamente las actividades necesarias para su desarrollo.
+
+Todos los integrantes deberán conocer el funcionamiento general de la calculadora y comprender los procedimientos financieros implementados.
+
+Durante la sustentación, cualquier integrante podrá ser seleccionado para:
+
+- explicar una operación;
+- realizar una prueba;
+- ingresar datos suministrados por el docente;
+- interpretar un resultado;
+- justificar el procedimiento financiero utilizado.
+
+## 3. Resultados de Aprendizaje Esperados – RAE
+
+Al finalizar el proyecto, el estudiante estará en capacidad de:
+
+- **RAE 1. Modelación financiera:** Representar correctamente situaciones de Ingeniería Económica mediante variables financieras, tasas de interés, periodos y relaciones de equivalencia.
+- **RAE 2. Aplicación de equivalencias financieras:** Aplicar los principios del valor del dinero en el tiempo para resolver operaciones asociadas con interés compuesto y anualidades.
+- **RAE 3. Integración tecnológica:** Traducir relaciones matemáticas y financieras a una herramienta computacional funcional.
+- **RAE 4. Validación de resultados:** Comprobar, mediante ejercicios desarrollados independientemente, que los resultados producidos por la calculadora coinciden con los resultados financieros esperados.
+- **RAE 5. Interpretación:** Interpretar los resultados obtenidos y reconocer las condiciones necesarias para que una operación financiera sea válida.
+- **RAE 6. Comunicación:** Presentar y sustentar de manera clara el funcionamiento, alcance, limitaciones y proceso de validación de la herramienta desarrollada.
+
+## 4. Competencias
+
+- **Competencia conceptual:** Comprende las relaciones fundamentales del valor del dinero en el tiempo y distingue entre interés compuesto, tasas de interés, anualidades y perpetuidades.
+- **Competencia analítica:** Identifica las variables presentes en una situación financiera y selecciona el procedimiento apropiado para determinar la incógnita.
+- **Competencia financiera:** Interpreta correctamente tasas periódicas, nominales, efectivas anuales, vencidas, anticipadas e indexadas.
+- **Competencia tecnológica:** Implementa relaciones financieras mediante una herramienta computacional funcional, organizada y comprensible.
+- **Competencia para la solución de problemas:** Integra conocimientos matemáticos, financieros y tecnológicos para resolver situaciones propias de Ingeniería Económica.
+- **Competencia comunicativa:** Explica el funcionamiento de la calculadora y sustenta las decisiones adoptadas durante su desarrollo.
+- **Competencia de trabajo colaborativo:** Participa responsablemente en el desarrollo del proyecto dentro del grupo definido al inicio del semestre.
+
+## 5. Objetivo de la actividad
+
+Desarrollar una herramienta financiera aplicada a Ingeniería Económica, para apoyar el análisis y la solución de situaciones financieras propias del curso, mediante la implementación de procedimientos de cálculo y la validación de sus resultados.
+
+## 6. Descripción de la actividad
+
+Cada grupo deberá desarrollar una calculadora financiera que permita al usuario seleccionar las diferentes operaciones trabajadas durante el curso.
+
+La herramienta deberá permitir identificar claramente:
+
+- la operación seleccionada;
+- los datos requeridos;
+- las unidades correspondientes;
+- la periodicidad de las tasas;
+- la variable desconocida;
+- el resultado obtenido.
+
+La calculadora podrá desarrollarse utilizando el lenguaje de programación, plataforma o entorno tecnológico que el grupo considere apropiado.
+
+No se calificará la complejidad del lenguaje de programación utilizado. Se evaluará principalmente que la herramienta sea:
+
+- funcional;
+- comprensible;
+- financieramente correcta;
+- verificable;
+- coherente con los contenidos del curso.
+
+## 7. Requisitos mínimos de funcionamiento
+
+La calculadora deberá:
+
+a) Permitir seleccionar claramente el tipo de operación;
+
+b) Solicitar únicamente los datos necesarios para el cálculo;
+
+c) Identificar claramente las unidades utilizadas;
+
+d) Diferenciar correctamente tasas y periodos;
+
+e) Mantener coherencia entre tasa y tiempo;
+
+f) Distinguir anualidades vencidas y anticipadas;
+
+g) Calcular anualidades perpetuas;
+
+h) Realizar conversiones de tasas;
+
+i) Realizar indexaciones de DTF, IBR, IPC Y UVR conforme a los procedimientos trabajados en clase;
+
+j) Permitir ingresar valores decimales cuando sean necesarios;
+
+k) Presentar resultados con un nivel de precisión adecuado;
+
+l) Informar al usuario cuando los datos sean inconsistentes;
+
+m) Evitar cálculos con combinaciones incompatibles de tasas, periodos o unidades;
+
+n) Identificar claramente la variable calculada;
+
+o) Funcionar correctamente con valores diferentes a los utilizados durante su programación.
+
+## 8. Validación obligatoria
+
+La validación de resultados constituye una parte fundamental del proyecto. Cada grupo deberá desarrollar exactamente cinco ejercicios de validación. Cada ejercicio deberá resolverse de dos maneras:
+
+**Primera:** Mediante el procedimiento financiero correspondiente, desarrollado independientemente de la calculadora.
+
+**Segunda:** Utilizando la calculadora construida por el grupo.
+
+Los resultados deberán coincidir. Solo serán aceptables diferencias producidas por criterios de redondeo.
+
+## 9. Cinco ejercicios obligatorios de validación
+
+### Validación 1. Interés compuesto
+
+El grupo deberá comprobar una operación de interés compuesto. El ejercicio deberá permitir verificar la correcta relación entre:
+
+- valor presente o futuro;
+- tasa;
+- tiempo.
+
+### Validación 2. Conversión e indexación de tasas
+
+El ejercicio deberá incluir:
+
+- una tasa indexada;
+- aplicación correcta del procedimiento de indexación correspondiente;
+- una conversión posterior de la tasa cuando sea necesario.
+
+La validación deberá permitir comprobar que la calculadora diferencia correctamente:
+
+- DTF e IBR;
+- IPC y UVR;
+- indexación;
+- conversión de periodicidad.
+
+### Validación 3. Anualidad vencida
+
+El ejercicio deberá comprobar una operación de anualidad vencida relacionada con alguna de las siguientes variables:
+
+- valor presente;
+- valor futuro;
+- cuota;
+- número de periodos.
+
+### Validación 4. Anualidad anticipada
+
+El ejercicio deberá comprobar una operación de anualidad anticipada relacionada con alguna de las siguientes variables:
+
+- valor presente;
+- valor futuro;
+- cuota;
+- número de periodos.
+
+### Validación 5. Anualidad perpetua
+
+El ejercicio deberá comprobar:
+
+- el capital requerido para financiar una perpetuidad; o
+- el pago periódico sostenible a partir de un capital disponible.
+
+## 10. Estructura obligatoria de cada ejercicio de validación
+
+Cada uno de los cinco ejercicios deberá contener:
+
+- **Enunciado:** Descripción de la situación financiera.
+- **Datos:** Identificación de valores, tasas, periodicidades y tiempo.
+- **Incógnita:** Variable que se desea determinar.
+- **Procedimiento financiero:** Relación o ecuación utilizada.
+- **Desarrollo independiente:** Resolución del ejercicio sin utilizar la calculadora desarrollada.
+- **Resultado independiente:** Valor obtenido mediante el procedimiento financiero.
+- **Resultado de la calculadora:** Valor producido por la herramienta.
+- **Comparación:** Verificación de la coincidencia entre ambos resultados.
+- **Validación:** Indicar resultado validado: Sí / No. Cuando exista una diferencia por redondeo deberá explicarse.
+
+## 11. Matriz de validación
+
+Cada grupo deberá incluir una matriz como la siguiente:
+
+| Prueba | Módulo validado | Resultado independiente | Resultado de la calculadora | Diferencia | Validado |
+|:------:|-----------------|-------------------------|-----------------------------|------------|:--------:|
+| 1 | Interés compuesto | | | | Sí/No |
+| 2 | Conversión e indexación de tasas | | | | Sí/No |
+| 3 | Anualidad vencida | | | | Sí/No |
+| 4 | Anualidad anticipada | | | | Sí/No |
+| 5 | Anualidad perpetua | | | | Sí/No |
+
+Los cinco ejercicios deberán estar correctamente validados antes de la sustentación.
+
+## 12. Condición de exactitud financiera
+
+La apariencia visual de la herramienta no sustituye la exactitud de los cálculos.
+
+No será suficiente que:
+
+- la aplicación abra;
+- existan botones;
+- se muestren formularios;
+- el diseño sea atractivo;
+- aparezca un resultado numérico.
+
+Una operación se considerará correctamente implementada únicamente cuando produzca resultados consistentes con los procedimientos financieros estudiados durante el curso. Una función que produzca resultados financieros incorrectos de manera sistemática será considerada incorrectamente implementada, aunque visualmente funcione.
+
+## 13. Prueba durante la sustentación
+
+Durante la sustentación, el docente podrá proporcionar datos diferentes a los utilizados en los cinco ejercicios de validación.
+
+El grupo deberá:
+
+1. identificar la operación solicitada;
+2. ingresar correctamente los datos;
+3. ejecutar la calculadora;
+4. obtener el resultado;
+5. explicar brevemente el procedimiento financiero utilizado;
+6. interpretar el resultado obtenido.
+
+Esta prueba permitirá verificar que la herramienta funciona con valores diferentes a los utilizados durante su desarrollo.
+
+## 14. Entregables
+
+Cada grupo deberá entregar:
+
+- **Calculadora financiera funcional:** Herramienta desarrollada y disponible para su revisión.
+- **Cinco ejercicios de validación:** Desarrollados completamente.
+- **Matriz de validación:** Con la comparación de los cinco ejercicios.
+- **Manual básico de uso:** Debe explicar:
+  - cómo acceder a la herramienta;
+  - cómo seleccionar una operación;
+  - qué datos ingresar;
+  - cómo seleccionar las periodicidades;
+  - cómo interpretar el resultado.
+- **Sustentación:** Demostración funcional de la calculadora y explicación del trabajo realizado.
+
+## 15. Rúbrica de evaluación
+
+La calificación final del proyecto se asignará en escala de: 0,0 a 5,0
+
+Cada criterio se evaluará utilizando tres niveles:
+
+- 5,0 – Cumplimiento alto
+- 3,0 – Cumplimiento parcial
+- 0,0 – No cumple
+
+La nota final se obtendrá aplicando la ponderación definida para cada criterio.
+
+## 16. Cálculo de la calificación final
+
+La nota final se calculará mediante:
+
+> Nota final = (Validación × 0,35) + (Funcionamiento × 0,20) + (Datos, unidades y periodicidades × 0,15) + (Interfaz × 0,10) + (Documentación × 0,10) + (Sustentación × 0,10)
+
+La calificación final estará comprendida entre: **0,0 y 5,0**. Los criterios con sus pesos son:
+
+| Criterio | Peso |
+|----------|:----:|
+| Validación financiera mediante los cinco ejercicios | 35% |
+| Funcionamiento e integración de la calculadora | 20% |
+| Manejo de datos, unidades y periodicidades | 15% |
+| Interfaz y facilidad de uso | 10% |
+| Documentación y evidencias del proyecto | 10% |
+| Sustentación y dominio del proyecto | 10% |
+
+## 17. Criterio de trabajo colaborativo
+
+El proyecto deberá ser desarrollado por los grupos conformados al inicio del semestre. Cada grupo podrá distribuir internamente las responsabilidades de programación, validación, documentación y diseño; sin embargo, el conocimiento del proyecto no deberá concentrarse en un único integrante. Todos los estudiantes deberán estar en capacidad de explicar:
+
+- Cómo funciona la herramienta;
+- Qué operaciones realiza;
+- Cómo se manejan tasas y periodicidades;
+- Cómo se realizan las indexaciones;
+- Cómo se comprueban los resultados;
+- Cuáles son las limitaciones de la calculadora.
+
+Durante la sustentación, cualquier integrante podrá ser seleccionado para realizar una operación, explicar un procedimiento o responder preguntas relacionadas con el proyecto.
