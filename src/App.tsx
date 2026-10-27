@@ -22,16 +22,16 @@ type Calculator = {
 };
 
 const calculators: Calculator[] = [
-  { id: 'compound', label: 'Interés Compuesto', icon: DollarSign, tone: 'bg-tone-mint text-icon-green', render: () => <SolveForCalculator module={compoundModule} /> },
   { id: 'rates', label: 'Conversión de Tasas', icon: ArrowLeftRight, tone: 'bg-tone-rose text-icon-red', render: () => <RateConversionCalculator /> },
   { id: 'index', label: 'Indexación Tasas', icon: ArrowUpRight, tone: 'bg-tone-cyan text-icon-blue', render: () => <IndexationCalculator /> },
+  { id: 'compound', label: 'Interés Compuesto', icon: DollarSign, tone: 'bg-tone-mint text-icon-green', render: () => <SolveForCalculator module={compoundModule} /> },
   { id: 'ordinary', label: 'Anualidad Vencida', icon: CalendarDays, tone: 'bg-tone-amber text-icon-orange', render: () => <SolveForCalculator module={ordinaryAnnuityModule} /> },
   { id: 'advance', label: 'Anualidad Anticipada', icon: Clock3, tone: 'bg-tone-indigo text-icon-indigo', render: () => <SolveForCalculator module={annuityDueModule} /> },
   { id: 'perpetual', label: 'Anualidad Perpetua', icon: Infinity, tone: 'bg-tone-lilac text-icon-purple', render: () => <SolveForCalculator module={perpetuityModule} /> },
 ];
 
 function App() {
-  const [activeCalculator, setActiveCalculator] = useState('compound');
+  const [activeCalculator, setActiveCalculator] = useState('rates');
 
   const active = calculators.find((calculator) => calculator.id === activeCalculator) ?? calculators[0];
 
@@ -41,7 +41,7 @@ function App() {
         <header className="flex items-center justify-center text-center">
           <div>
             <h1 className="text-[28px] font-extrabold leading-[1.05] tracking-[-0.055em] text-ink-heading sm:text-[clamp(29px,3.1vw,36px)]">
-              calculadora ingeneria economica
+              Calculadora de Ingeniería Económica
             </h1>
           </div>
         </header>

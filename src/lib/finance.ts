@@ -144,7 +144,7 @@ export function convertRate(rate: number, from: RateSpec, to: RateSpec) {
 
 // ─── 3. Indexación de tasas ──────────────────────────────────────────────
 
-export type Indicator = 'DTF' | 'IBR' | 'IPC' | 'UVR';
+export type Indicator = 'DTF' | 'IBR' | 'IPC';
 
 const NOMINAL_TA: RateSpec = { kind: 'nominal', periodicity: 'quarterly', modality: 'anticipada' };
 const NOMINAL_MV: RateSpec = { kind: 'nominal', periodicity: 'monthly', modality: 'vencida' };
@@ -154,7 +154,6 @@ export const INDICATOR_RATES: Record<Indicator, { indicator: RateSpec; spread: R
   DTF: { indicator: EFFECTIVE_ANNUAL, spread: NOMINAL_TA },
   IBR: { indicator: NOMINAL_MV, spread: NOMINAL_MV },
   IPC: { indicator: EFFECTIVE_ANNUAL, spread: EFFECTIVE_ANNUAL },
-  UVR: { indicator: EFFECTIVE_ANNUAL, spread: EFFECTIVE_ANNUAL },
 };
 
 /** iDX = (1+i1)(1+i2) − 1 */
@@ -172,7 +171,7 @@ export type IndexedRate = {
 
 /**
  * DTF e IBR: los puntos se suman sobre la tasa nominal (DTF en T.A., IBR en N.M.V.).
- * IPC y UVR: se componen con (1+i1)(1+i2) − 1 y el resultado es E.A.
+ * IPC: se compone con (1+i1)(1+i2) − 1 y el resultado es E.A.
  */
 export function indexRate(indicator: Indicator, indicatorRate: number, spread: number): IndexedRate {
   requirePositive(indicatorRate, `El valor de ${indicator}`);
@@ -186,7 +185,6 @@ export function indexRate(indicator: Indicator, indicatorRate: number, spread: n
     case 'IBR':
       return { value: indicatorRate + spread, spec: NOMINAL_MV, indicatorValue: indicatorRate };
     case 'IPC':
-    case 'UVR':
       return { value: composeRates(indicatorRate, spread), spec: EFFECTIVE_ANNUAL, indicatorValue: indicatorRate };
   }
 }

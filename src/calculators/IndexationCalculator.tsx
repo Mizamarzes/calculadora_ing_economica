@@ -10,15 +10,13 @@ import { errorMessage, readRate } from './inputs';
 const indicators: { value: Indicator; label: string; procedure: string }[] = [
   { value: 'DTF', label: 'DTF', procedure: 'La DTF se publica E.A.: se convierte a N.T.A. y se le suman los puntos.' },
   { value: 'IBR', label: 'IBR', procedure: 'La IBR se publica N.M.V.: se le suman los puntos directamente.' },
-  { value: 'IPC', label: 'IPC (inflación)', procedure: 'Se componen las tasas: (1 + IPC)(1 + puntos) − 1, resultado E.A.' },
-  { value: 'UVR', label: 'UVR', procedure: 'Se componen las tasas: (1 + variación UVR)(1 + puntos) − 1, resultado E.A.' },
+  { value: 'IPC', label: 'IPC', procedure: 'Se componen las tasas: (1 + IPC)(1 + puntos) − 1, resultado E.A.' },
 ];
 
 const defaults: Record<Indicator, { indicator: string; spread: string }> = {
   DTF: { indicator: '9', spread: '4' },
   IBR: { indicator: '10', spread: '2' },
   IPC: { indicator: '5', spread: '6' },
-  UVR: { indicator: '5', spread: '6' },
 };
 
 export function IndexationCalculator() {
@@ -31,7 +29,7 @@ export function IndexationCalculator() {
 
   const specs = INDICATOR_RATES[indicator];
   const info = indicators.find((item) => item.value === indicator) ?? indicators[0];
-  const indicatorLabel = indicator === 'UVR' ? 'Variación anual UVR' : `Valor ${indicator}`;
+  const indicatorLabel = `Valor ${indicator}`;
 
   const changeIndicator = (value: Indicator) => {
     setIndicator(value);

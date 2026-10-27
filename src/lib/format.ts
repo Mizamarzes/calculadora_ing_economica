@@ -1,12 +1,12 @@
 import type { Periodicity, RateSpec } from './finance';
 
 export const PERIODICITIES: { value: Periodicity; label: string; adjective: string; letter: string; unit: string }[] = [
-  { value: 'monthly', label: 'Mensual (12/año)', adjective: 'mensual', letter: 'M', unit: 'meses' },
-  { value: 'bimonthly', label: 'Bimestral (6/año)', adjective: 'bimestral', letter: 'B', unit: 'bimestres' },
-  { value: 'quarterly', label: 'Trimestral (4/año)', adjective: 'trimestral', letter: 'T', unit: 'trimestres' },
-  { value: 'fourMonthly', label: 'Cuatrimestral (3/año)', adjective: 'cuatrimestral', letter: 'C', unit: 'cuatrimestres' },
-  { value: 'semiannual', label: 'Semestral (2/año)', adjective: 'semestral', letter: 'S', unit: 'semestres' },
-  { value: 'annual', label: 'Anual (1/año)', adjective: 'anual', letter: 'A', unit: 'años' },
+  { value: 'monthly', label: 'Mensual', adjective: 'mensual', letter: 'M', unit: 'meses' },
+  { value: 'bimonthly', label: 'Bimestral', adjective: 'bimestral', letter: 'B', unit: 'bimestres' },
+  { value: 'quarterly', label: 'Trimestral', adjective: 'trimestral', letter: 'T', unit: 'trimestres' },
+  { value: 'fourMonthly', label: 'Cuatrimestral', adjective: 'cuatrimestral', letter: 'C', unit: 'cuatrimestres' },
+  { value: 'semiannual', label: 'Semestral', adjective: 'semestral', letter: 'S', unit: 'semestres' },
+  { value: 'annual', label: 'Anual', adjective: 'anual', letter: 'A', unit: 'años' },
 ];
 
 export function periodicityInfo(periodicity: Periodicity) {
