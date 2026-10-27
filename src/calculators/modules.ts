@@ -67,15 +67,15 @@ export const ordinaryAnnuityModule: SolveForModule = {
 
 export const annuityDueModule: SolveForModule = {
   periodLabel: 'Periodicidad de los pagos',
-  note: 'Pagos iguales al inicio de cada periodo. La tasa debe ser efectiva vencida en la periodicidad de los pagos.',
+  labels: { A: 'Anualidad (A)', n: 'Tiempo (n)' },
   defaults: { A: '500000', i: '1,5', n: '24', P: '10165430,72', F: '14531511,80' },
   unknowns: [
-    { id: 'P', label: 'Valor presente (P)', result: 'P', inputs: ['A', 'i', 'n'], solve: (v) => finance.annuityDuePresentValue(v.A, v.i, v.n) },
     { id: 'F', label: 'Valor futuro (F)', result: 'F', inputs: ['A', 'i', 'n'], solve: (v) => finance.annuityDueFutureValue(v.A, v.i, v.n) },
-    { id: 'A-P', label: 'Cuota (A) a partir de P', result: 'A', inputs: ['P', 'i', 'n'], solve: (v) => finance.annuityDuePaymentFromPresent(v.P, v.i, v.n) },
-    { id: 'A-F', label: 'Cuota (A) a partir de F', result: 'A', inputs: ['F', 'i', 'n'], solve: (v) => finance.annuityDuePaymentFromFuture(v.F, v.i, v.n) },
-    { id: 'n-P', label: 'Número de periodos (n) a partir de P', result: 'n', inputs: ['P', 'A', 'i'], solve: (v) => finance.annuityDuePeriodsFromPresent(v.P, v.A, v.i) },
-    { id: 'n-F', label: 'Número de periodos (n) a partir de F', result: 'n', inputs: ['F', 'A', 'i'], solve: (v) => finance.annuityDuePeriodsFromFuture(v.F, v.A, v.i) },
+    { id: 'P', label: 'Valor presente (P)', result: 'P', inputs: ['A', 'i', 'n'], solve: (v) => finance.annuityDuePresentValue(v.A, v.i, v.n) },
+    { id: 'A-P', label: 'Anualidad (A) a partir de P', result: 'A', basis: 'P', inputs: ['P', 'i', 'n'], solve: (v) => finance.annuityDuePaymentFromPresent(v.P, v.i, v.n) },
+    { id: 'A-F', label: 'Anualidad (A) a partir de F', result: 'A', basis: 'F', inputs: ['F', 'i', 'n'], solve: (v) => finance.annuityDuePaymentFromFuture(v.F, v.i, v.n) },
+    { id: 'n-P', label: 'Tiempo (n) a partir de P', result: 'n', basis: 'P', inputs: ['P', 'A', 'i'], solve: (v) => finance.annuityDuePeriodsFromPresent(v.P, v.A, v.i) },
+    { id: 'n-F', label: 'Tiempo (n) a partir de F', result: 'n', basis: 'F', inputs: ['F', 'A', 'i'], solve: (v) => finance.annuityDuePeriodsFromFuture(v.F, v.A, v.i) },
   ],
 };
 
