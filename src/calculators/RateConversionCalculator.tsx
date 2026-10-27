@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { EFFECTIVE_ANNUAL, effectiveAnnualToPeriodic, fromEffectiveAnnual, toEffectiveAnnual } from '@/lib/finance';
+import { convertRate, EFFECTIVE_ANNUAL, toEffectiveAnnual } from '@/lib/finance';
 import type { RateSpec } from '@/lib/finance';
-import { describeRate, formatRate, periodicityInfo } from '@/lib/format';
+import { describeRate, formatRate } from '@/lib/format';
 import { CalculatorActions, Field, NumberInput, ResultPanel, SectionTitle } from '@/components/form';
 import type { CalculationResult } from '@/components/form';
 import { RateSpecFields } from '@/components/RateSpecFields';
@@ -16,19 +16,10 @@ export function RateConversionCalculator() {
 
   const calculate = () => {
     try {
-      const effectiveAnnual = toEffectiveAnnual(readRate(rate, 'Tasa de interés'), from);
-      const converted = fromEffectiveAnnual(effectiveAnnual, to);
-      const targetPeriodic = effectiveAnnualToPeriodic(effectiveAnnual, to.periodicity);
-      const details: string[] = [];
-      if (to.periodicity !== 'annual') {
-        details.push(
-          `Tasa efectiva ${periodicityInfo(to.periodicity).adjective} vencida: ${formatRate(targetPeriodic)}`,
-          `Equivalente: ${formatRate(effectiveAnnual)} E.A.`,
-        );
-      } else if (to.modality === 'anticipada') {
-        details.push(`Equivalente: ${formatRate(effectiveAnnual)} E.A.`);
-      }
-      setResult({ label: 'Tasa resultante', value: `${formatRate(converted)} ${describeRate(to)}`, details });
+      const value = readRate(rate, 'Tasa de interés');
+      const converted = convertRate(value, from, to);
+      const details = describeRate(to) === 'E.A.' ? [] : [`Equivalente: ${formatRate(toEffectiveAnnual(value, from))} E.A.`];
+      setResult({ label: 'Tasa resultante', value: `${formatRate(converted, 2)} ${describeRate(to)}`, details });
       setError(null);
     } catch (caught) {
       setResult(null);

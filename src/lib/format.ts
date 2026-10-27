@@ -15,6 +15,7 @@ export function periodicityInfo(periodicity: Periodicity) {
 
 /** Ej.: "E.A.", "N.M.V.", "N.T.A.", "efectiva mensual", "mensual anticipada". */
 export function describeRate({ kind, periodicity, modality }: RateSpec) {
+  if (kind === 'efectiva') return 'E.A.';
   if (periodicity === 'annual') return modality === 'vencida' ? 'E.A.' : 'anual anticipada';
   const { letter, adjective } = periodicityInfo(periodicity);
   if (kind === 'nominal') return `N.${letter}.${modality === 'vencida' ? 'V' : 'A'}.`;

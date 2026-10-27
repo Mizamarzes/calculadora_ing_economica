@@ -8,8 +8,8 @@ import { errorMessage, readNumber, readRate } from './inputs';
 import { DEFAULT_PERIODICITY, VARIABLES } from './modules';
 import type { SolveForModule, Variable } from './modules';
 
-function describeResult(variable: Variable, value: number, periodicity: Periodicity): CalculationResult {
-  const { label, unit } = VARIABLES[variable];
+function describeResult(variable: Variable, label: string, value: number, periodicity: Periodicity): CalculationResult {
+  const { unit } = VARIABLES[variable];
 
   if (unit === 'rate') {
     const spec = { kind: 'periodica', periodicity, modality: 'vencida' } as const;
@@ -33,6 +33,8 @@ export function SolveForCalculator({ module }: { module: SolveForModule }) {
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const labelOf = (key: Variable) => module.labels?.[key] ?? VARIABLES[key].label;
+
   const unknown = module.unknowns.find((item) => item.id === unknownId) ?? module.unknowns[0];
   const period = periodicityInfo(periodicity);
 
@@ -45,11 +47,12 @@ export function SolveForCalculator({ module }: { module: SolveForModule }) {
     try {
       const parsed = {} as Record<Variable, number>;
       for (const key of unknown.inputs) {
-        const { label, unit } = VARIABLES[key];
+        const label = labelOf(key);
+        const { unit } = VARIABLES[key];
         const raw = values[key] ?? '';
         parsed[key] = unit === 'rate' ? readRate(raw, label) : readNumber(raw, label);
       }
-      setResult(describeResult(unknown.result, unknown.solve(parsed), periodicity));
+      setResult(describeResult(unknown.result, labelOf(unknown.result), unknown.solve(parsed), periodicity));
       setError(null);
     } catch (caught) {
       setResult(null);
@@ -92,7 +95,8 @@ export function SolveForCalculator({ module }: { module: SolveForModule }) {
         )}
 
         {unknown.inputs.map((key) => {
-          const { label, unit } = VARIABLES[key];
+          const label = labelOf(key);
+          const { unit } = VARIABLES[key];
           return (
             <Field key={key} label={label}>
               <NumberInput

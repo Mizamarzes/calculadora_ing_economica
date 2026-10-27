@@ -42,17 +42,20 @@ Relaciona un valor presente con un valor futuro a una tasa periódica durante $n
 
 ## 2. Conversión de tasas
 
-El procedimiento usa siempre como paso intermedio la **tasa periódica efectiva vencida**:
+La calculadora maneja tres tipos de tasa, los vértices del **círculo de fórmulas** de la hoja: interés **nominal** ($i_n$), **periódico** ($i_p$) y **efectivo anual** ($i_{ea}$).
 
-```
-tasa ingresada ──► tasa periódica vencida ──► tasa deseada
-```
+### 2.1 Círculo de fórmulas *(hoja de fórmulas)*
 
-### 2.1 Nominal ↔ periódica
+| De → a | Fórmula |
+|---|---|
+| Nominal → periódico | $i_p = \dfrac{i_n}{m}$ |
+| Periódico → nominal | $i_n = i_p \cdot m$ |
+| Nominal → efectivo | $i_{ea} = \left[\left(1+\dfrac{i_n}{m}\right)^m - 1\right] \times 100$ |
+| Efectivo → nominal | $i_n = \left[(1+i_{ea})^{1/m} - 1\right] \cdot m \times 100$ |
+| Periódico → efectivo | $i_{ea} = \left[(1+i)^m - 1\right] \times 100$ |
+| Efectivo → periódico | $i_p = \left[(1+i)^{1/m} - 1\right] \times 100$ |
 
-$$i = \frac{j}{m} \qquad\qquad j = i \cdot m$$
-
-La tasa periódica conserva la modalidad de la nominal: una nominal anticipada (p. ej. T.A.) da una periódica anticipada $i_a$.
+El círculo supone tasas vencidas. Nominal ↔ periódico con la misma periodicidad y modalidad usa el lado directo; cualquier otro cambio (otra periodicidad, otra modalidad) pasa por el efectivo anual.
 
 ### 2.2 Vencida ↔ anticipada *(hoja de fórmulas)*
 
@@ -62,15 +65,9 @@ $$i_a = \frac{i_v}{1+i_v} \qquad\qquad i_v = \frac{i_a}{1-i_a}$$
 
 Condición: $i_a < 1$ (100 %).
 
-### 2.3 Periódica vencida ↔ efectiva anual *(derivada de interés compuesto)*
+### 2.3 Tasas anticipadas
 
-$$i_e = (1+i_v)^m - 1 \qquad\qquad i_v = (1+i_e)^{1/m} - 1$$
-
-### 2.4 Entre dos periodicidades cualesquiera *(derivada)*
-
-Con $m_1$ y $m_2$ periodos por año y ambas tasas periódicas vencidas:
-
-$$i_2 = (1+i_1)^{m_1/m_2} - 1$$
+Una nominal o periódica anticipada se lleva primero a periódica ($i_a = i_n/m$), se pasa a vencida con 2.2 y luego se sigue el círculo. Para llegar a una anticipada se hace al revés.
 
 ### Periodicidades
 

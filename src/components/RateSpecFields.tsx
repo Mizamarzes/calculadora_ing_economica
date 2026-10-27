@@ -3,8 +3,9 @@ import { PERIODICITIES } from '@/lib/format';
 import { Field, Select } from './form';
 
 const kindOptions: { value: RateKind; label: string }[] = [
-  { value: 'nominal', label: 'Nominal anual (j)' },
-  { value: 'periodica', label: 'Periódica efectiva (i)' },
+  { value: 'nominal', label: 'Interés nominal (iₙ)' },
+  { value: 'periodica', label: 'Interés periódico (iₚ)' },
+  { value: 'efectiva', label: 'Interés efectivo anual (iₑₐ)' },
 ];
 
 const modalityOptions: { value: Modality; label: string }[] = [
@@ -12,7 +13,10 @@ const modalityOptions: { value: Modality; label: string }[] = [
   { value: 'anticipada', label: 'Anticipada' },
 ];
 
-/** Selectores de tipo, periodicidad y modalidad de una tasa. `suffix` completa la etiqueta ("origen", "deseada"). */
+/**
+ * Selectores de tipo, periodicidad y modalidad de una tasa. `suffix` completa la etiqueta ("origen", "deseada").
+ * La efectiva anual no pide periodicidad ni modalidad.
+ */
 export function RateSpecFields({
   spec,
   onChange,
@@ -27,12 +31,16 @@ export function RateSpecFields({
       <Field label={`Tipo de tasa ${suffix}`}>
         <Select value={spec.kind} onChange={(kind) => onChange({ ...spec, kind })} options={kindOptions} />
       </Field>
-      <Field label={`Periodicidad ${suffix}`}>
-        <Select value={spec.periodicity} onChange={(periodicity) => onChange({ ...spec, periodicity })} options={PERIODICITIES} />
-      </Field>
-      <Field label={`Modalidad ${suffix}`}>
-        <Select value={spec.modality} onChange={(modality) => onChange({ ...spec, modality })} options={modalityOptions} />
-      </Field>
+      {spec.kind !== 'efectiva' && (
+        <>
+          <Field label={`Periodicidad ${suffix}`}>
+            <Select value={spec.periodicity} onChange={(periodicity) => onChange({ ...spec, periodicity })} options={PERIODICITIES} />
+          </Field>
+          <Field label={`Modalidad ${suffix}`}>
+            <Select value={spec.modality} onChange={(modality) => onChange({ ...spec, modality })} options={modalityOptions} />
+          </Field>
+        </>
+      )}
     </>
   );
 }

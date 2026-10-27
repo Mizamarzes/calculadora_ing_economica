@@ -73,8 +73,12 @@ export function compoundPeriods(P: number, F: number, i: number) {
 
 export type Periodicity = 'monthly' | 'bimonthly' | 'quarterly' | 'fourMonthly' | 'semiannual' | 'annual';
 export type Modality = 'vencida' | 'anticipada';
-/** Nominal: tasa anual capitalizable j. Periódica: tasa por periodo i. */
-export type RateKind = 'nominal' | 'periodica';
+/**
+ * Los tres vértices del círculo de fórmulas de la hoja:
+ * nominal (in, anual capitalizable m veces), periódica (ip, por periodo) y efectiva anual (iea).
+ * La efectiva anual ignora `periodicity` y `modality`.
+ */
+export type RateKind = 'nominal' | 'periodica' | 'efectiva';
 export type RateSpec = { kind: RateKind; periodicity: Periodicity; modality: Modality };
 
 export const PERIODS_PER_YEAR: Record<Periodicity, number> = {
@@ -86,14 +90,14 @@ export const PERIODS_PER_YEAR: Record<Periodicity, number> = {
   annual: 1,
 };
 
-export const EFFECTIVE_ANNUAL: RateSpec = { kind: 'periodica', periodicity: 'annual', modality: 'vencida' };
+export const EFFECTIVE_ANNUAL: RateSpec = { kind: 'efectiva', periodicity: 'annual', modality: 'vencida' };
 
-/** i = j / m */
+/** ip = in / m */
 export function nominalToPeriodic(j: number, periodicity: Periodicity) {
   return j / PERIODS_PER_YEAR[periodicity];
 }
 
-/** j = i · m */
+/** in = ip · m */
 export function periodicToNominal(i: number, periodicity: Periodicity) {
   return i * PERIODS_PER_YEAR[periodicity];
 }
@@ -111,34 +115,66 @@ export function anticipadaToVencida(ia: number) {
   return ia / (1 - ia);
 }
 
-/** ie = (1+iv)^m − 1 */
+/** iea = (1+ip)^m − 1 */
 export function periodicToEffectiveAnnual(iv: number, periodicity: Periodicity) {
   return (1 + iv) ** PERIODS_PER_YEAR[periodicity] - 1;
 }
 
-/** iv = (1+ie)^(1/m) − 1 */
+/** ip = (1+iea)^(1/m) − 1 */
 export function effectiveAnnualToPeriodic(ie: number, periodicity: Periodicity) {
   return (1 + ie) ** (1 / PERIODS_PER_YEAR[periodicity]) - 1;
 }
 
-/** Lleva cualquier tasa a su equivalente efectiva anual, pasando por la periódica vencida. */
+/** iea = (1 + in/m)^m − 1 */
+export function nominalToEffectiveAnnual(iN: number, periodicity: Periodicity) {
+  const m = PERIODS_PER_YEAR[periodicity];
+  return (1 + iN / m) ** m - 1;
+}
+
+/** in = [(1+iea)^(1/m) − 1] · m */
+export function effectiveAnnualToNominal(iea: number, periodicity: Periodicity) {
+  const m = PERIODS_PER_YEAR[periodicity];
+  return ((1 + iea) ** (1 / m) - 1) * m;
+}
+
+/**
+ * Lleva cualquier tasa a efectiva anual por el círculo de fórmulas.
+ * Las anticipadas se pasan antes a vencida sobre la tasa periódica (iv = ia / (1−ia)).
+ */
 export function toEffectiveAnnual(rate: number, from: RateSpec) {
   requirePositive(rate, 'La tasa de interés');
+  if (from.kind === 'efectiva') return rate;
+  if (from.kind === 'nominal' && from.modality === 'vencida') {
+    return checkResult(nominalToEffectiveAnnual(rate, from.periodicity));
+  }
   const periodic = from.kind === 'nominal' ? nominalToPeriodic(rate, from.periodicity) : rate;
   const vencida = from.modality === 'anticipada' ? anticipadaToVencida(periodic) : periodic;
   return checkResult(periodicToEffectiveAnnual(vencida, from.periodicity));
 }
 
-/** Expresa una tasa efectiva anual en la periodicidad, modalidad y tipo indicados. */
-export function fromEffectiveAnnual(ie: number, to: RateSpec) {
-  requirePositive(ie, 'La tasa efectiva anual');
-  const vencida = effectiveAnnualToPeriodic(ie, to.periodicity);
+/** Expresa una tasa efectiva anual como nominal, periódica o efectiva, en la periodicidad y modalidad indicadas. */
+export function fromEffectiveAnnual(iea: number, to: RateSpec) {
+  requirePositive(iea, 'La tasa efectiva anual');
+  if (to.kind === 'efectiva') return iea;
+  if (to.kind === 'nominal' && to.modality === 'vencida') {
+    return checkResult(effectiveAnnualToNominal(iea, to.periodicity));
+  }
+  const vencida = effectiveAnnualToPeriodic(iea, to.periodicity);
   const periodic = to.modality === 'anticipada' ? vencidaToAnticipada(vencida) : vencida;
   return checkResult(to.kind === 'nominal' ? periodicToNominal(periodic, to.periodicity) : periodic);
 }
 
-/** Convierte una tasa entre dos formas cualesquiera (nominal/periódica, periodicidad, modalidad). */
+/**
+ * Convierte una tasa entre dos formas cualesquiera.
+ * Nominal ↔ periódica de igual periodicidad y modalidad usa el lado directo del círculo (ip = in/m, in = ip·m);
+ * cualquier otro caso pasa por la efectiva anual.
+ */
 export function convertRate(rate: number, from: RateSpec, to: RateSpec) {
+  if (from.kind !== 'efectiva' && to.kind !== 'efectiva' && from.periodicity === to.periodicity && from.modality === to.modality) {
+    requirePositive(rate, 'La tasa de interés');
+    if (from.kind === 'nominal' && to.kind === 'periodica') return nominalToPeriodic(rate, from.periodicity);
+    if (from.kind === 'periodica' && to.kind === 'nominal') return periodicToNominal(rate, from.periodicity);
+  }
   return fromEffectiveAnnual(toEffectiveAnnual(rate, from), to);
 }
 
