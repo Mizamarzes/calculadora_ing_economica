@@ -243,13 +243,13 @@ function futureValueFactor(i: number, n: number) {
 
 /** P = A[((1+i)^n − 1) / (i(1+i)^n)] */
 export function ordinaryAnnuityPresentValue(A: number, i: number, n: number) {
-  requireAnnuityInputs(A, 'La cuota', i, n);
+  requireAnnuityInputs(A, 'La anualidad', i, n);
   return checkResult(A * presentValueFactor(i, n));
 }
 
 /** F = A[((1+i)^n − 1) / i] */
 export function ordinaryAnnuityFutureValue(A: number, i: number, n: number) {
-  requireAnnuityInputs(A, 'La cuota', i, n);
+  requireAnnuityInputs(A, 'La anualidad', i, n);
   return checkResult(A * futureValueFactor(i, n));
 }
 
@@ -268,10 +268,10 @@ export function ordinaryAnnuityPaymentFromFuture(F: number, i: number, n: number
 /** n = −ln(1 − P·i/A) / ln(1+i) */
 export function ordinaryAnnuityPeriodsFromPresent(P: number, A: number, i: number) {
   requirePositive(P, 'El valor presente');
-  requirePositive(A, 'La cuota');
+  requirePositive(A, 'La anualidad');
   requirePositive(i, 'La tasa de interés');
   if (A <= P * i) {
-    throw new FinanceError('La cuota no alcanza a cubrir los intereses del periodo (A ≤ P·i): la deuda nunca se paga.');
+    throw new FinanceError('La anualidad no alcanza a cubrir los intereses del periodo (A ≤ P·i): la deuda nunca se paga.');
   }
   return checkResult(-Math.log(1 - (P * i) / A) / Math.log(1 + i));
 }
@@ -279,7 +279,7 @@ export function ordinaryAnnuityPeriodsFromPresent(P: number, A: number, i: numbe
 /** n = ln(F·i/A + 1) / ln(1+i) */
 export function ordinaryAnnuityPeriodsFromFuture(F: number, A: number, i: number) {
   requirePositive(F, 'El valor futuro');
-  requirePositive(A, 'La cuota');
+  requirePositive(A, 'La anualidad');
   requirePositive(i, 'La tasa de interés');
   return checkResult(Math.log((F * i) / A + 1) / Math.log(1 + i));
 }
@@ -293,13 +293,13 @@ function requireAnnuityDueInputs(amount: number, amountName: string, i: number, 
 
 /** P = A + A[((1+i)^(n−1) − 1) / (i(1+i)^(n−1))] */
 export function annuityDuePresentValue(A: number, i: number, n: number) {
-  requireAnnuityDueInputs(A, 'La cuota', i, n);
+  requireAnnuityDueInputs(A, 'La anualidad', i, n);
   return checkResult(A + A * presentValueFactor(i, n - 1));
 }
 
 /** F = A[((1+i)^(n+1) − (1+i)) / i] */
 export function annuityDueFutureValue(A: number, i: number, n: number) {
-  requireAnnuityDueInputs(A, 'La cuota', i, n);
+  requireAnnuityDueInputs(A, 'La anualidad', i, n);
   return checkResult(A * (((1 + i) ** (n + 1) - (1 + i)) / i));
 }
 
@@ -318,10 +318,10 @@ export function annuityDuePaymentFromFuture(F: number, i: number, n: number) {
 /** n = −ln(1 − P·i / (A(1+i))) / ln(1+i) */
 export function annuityDuePeriodsFromPresent(P: number, A: number, i: number) {
   requirePositive(P, 'El valor presente');
-  requirePositive(A, 'La cuota');
+  requirePositive(A, 'La anualidad');
   requirePositive(i, 'La tasa de interés');
   if (A * (1 + i) <= P * i) {
-    throw new FinanceError('La cuota no alcanza a cubrir los intereses (A(1+i) ≤ P·i): la deuda nunca se paga.');
+    throw new FinanceError('La anualidad no alcanza a cubrir los intereses (A(1+i) ≤ P·i): la deuda nunca se paga.');
   }
   return checkResult(-Math.log(1 - (P * i) / (A * (1 + i))) / Math.log(1 + i));
 }
@@ -329,7 +329,7 @@ export function annuityDuePeriodsFromPresent(P: number, A: number, i: number) {
 /** n = ln(1 + F·i / (A(1+i))) / ln(1+i) */
 export function annuityDuePeriodsFromFuture(F: number, A: number, i: number) {
   requirePositive(F, 'El valor futuro');
-  requirePositive(A, 'La cuota');
+  requirePositive(A, 'La anualidad');
   requirePositive(i, 'La tasa de interés');
   return checkResult(Math.log(1 + (F * i) / (A * (1 + i))) / Math.log(1 + i));
 }
@@ -338,7 +338,7 @@ export function annuityDuePeriodsFromFuture(F: number, A: number, i: number) {
 
 /** P = A / i */
 export function perpetuityPresentValue(A: number, i: number) {
-  requirePositive(A, 'La cuota');
+  requirePositive(A, 'La anualidad');
   requirePositive(i, 'La tasa de interés');
   return checkResult(A / i);
 }
@@ -353,6 +353,6 @@ export function perpetuityPayment(P: number, i: number) {
 /** i = A / P */
 export function perpetuityRate(P: number, A: number) {
   requirePositive(P, 'El valor presente');
-  requirePositive(A, 'La cuota');
+  requirePositive(A, 'La anualidad');
   return checkResult(A / P);
 }

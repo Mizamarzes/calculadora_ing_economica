@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { toEffectiveAnnual } from '@/lib/finance';
 import type { Periodicity } from '@/lib/finance';
 import { describeRate, formatMoney, formatNumber, formatRate, PERIODICITIES, periodicityInfo } from '@/lib/format';
-import { CalculatorActions, Field, Hint, NumberInput, ResultPanel, Select } from '@/components/form';
+import { CalculatorActions, Field, NumberInput, ResultPanel, Select } from '@/components/form';
 import type { CalculationResult } from '@/components/form';
 import { errorMessage, readNumber, readRate } from './inputs';
 import { DEFAULT_PERIODICITY, VARIABLES } from './modules';
@@ -16,12 +16,13 @@ const basisOptions: { value: 'P' | 'F'; label: string }[] = [
 /** Las incógnitas con `basis` comparten opción en el selector (p. ej. A desde P y A desde F). */
 const groupOf = (unknown: Unknown) => (unknown.basis ? unknown.result : unknown.id);
 
-function describeResult(variable: Variable, label: string, value: number, periodicity: Periodicity): CalculationResult {
+function describeResult(variable: Variable, label: string, value: number, periodicity: Periodicity, shortRate = false): CalculationResult {
   const { unit } = VARIABLES[variable];
 
   if (unit === 'rate') {
     const spec = { kind: 'periodica', periodicity, modality: 'vencida' } as const;
     const details = periodicity === 'annual' ? [] : [`Equivalente: ${formatRate(toEffectiveAnnual(value, spec))} E.A.`];
+    if (shortRate) return { label, value: `${formatRate(value, 2)} E.${periodicityInfo(periodicity).letter}.`, details };
     return { label, value: `${formatRate(value)} ${describeRate(spec)}`, details };
   }
 
@@ -67,7 +68,7 @@ export function SolveForCalculator({ module }: { module: SolveForModule }) {
         const raw = values[key] ?? '';
         parsed[key] = unit === 'rate' ? readRate(raw, label) : readNumber(raw, label);
       }
-      setResult(describeResult(unknown.result, labelOf(unknown.result), unknown.solve(parsed), periodicity));
+      setResult(describeResult(unknown.result, labelOf(unknown.result), unknown.solve(parsed), periodicity, module.shortRate));
       setError(null);
     } catch (caught) {
       setResult(null);
@@ -115,11 +116,6 @@ export function SolveForCalculator({ module }: { module: SolveForModule }) {
             options={PERIODICITIES}
           />
         </Field>
-        {module.note && (
-          <Hint>
-            {module.note} Si la tasa es nominal o anticipada, conviértela primero en «Conversión de Tasas».
-          </Hint>
-        )}
 
         {unknown.inputs.map((key) => {
           const label = labelOf(key);

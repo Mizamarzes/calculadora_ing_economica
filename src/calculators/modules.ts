@@ -33,9 +33,10 @@ export type SolveForModule = {
   defaults: Partial<Record<Variable, string>>;
   /** Etiqueta del selector de periodicidad, que fija la unidad de la tasa y de n. */
   periodLabel: string;
-  note?: string;
   /** Etiquetas propias del módulo; reemplazan las de `VARIABLES`. */
   labels?: Partial<Record<Variable, string>>;
+  /** Tasa resultante con 2 decimales y unidad abreviada (E.M., E.T., …) en vez de 4 decimales y "efectiva mensual". */
+  shortRate?: boolean;
 };
 
 export const DEFAULT_PERIODICITY: Periodicity = 'monthly';
@@ -81,11 +82,12 @@ export const annuityDueModule: SolveForModule = {
 
 export const perpetuityModule: SolveForModule = {
   periodLabel: 'Periodicidad de los pagos',
-  note: 'Pagos iguales al final de cada periodo, sin fin. La tasa debe estar en la misma periodicidad que los pagos.',
+  labels: { A: 'Anualidad (A)' },
+  shortRate: true,
   defaults: { A: '2000000', i: '1', P: '200000000' },
   unknowns: [
-    { id: 'P', label: 'Capital requerido (P)', result: 'P', inputs: ['A', 'i'], solve: (v) => finance.perpetuityPresentValue(v.A, v.i) },
-    { id: 'A', label: 'Pago sostenible (A)', result: 'A', inputs: ['P', 'i'], solve: (v) => finance.perpetuityPayment(v.P, v.i) },
+    { id: 'P', label: 'Valor presente (P)', result: 'P', inputs: ['A', 'i'], solve: (v) => finance.perpetuityPresentValue(v.A, v.i) },
+    { id: 'A', label: 'Anualidad (A)', result: 'A', inputs: ['P', 'i'], solve: (v) => finance.perpetuityPayment(v.P, v.i) },
     { id: 'i', label: 'Tasa de interés (i)', result: 'i', inputs: ['P', 'A'], solve: (v) => finance.perpetuityRate(v.P, v.A) },
   ],
 };
