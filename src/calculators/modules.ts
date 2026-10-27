@@ -17,6 +17,11 @@ export type Unknown = {
   /** Texto del selector "Variable a calcular". */
   label: string;
   result: Variable;
+  /**
+   * Para A y n de anualidades: si se despeja desde el valor presente o el futuro.
+   * Las incógnitas con `basis` se agrupan en una sola opción y la calculadora pregunta P o F aparte.
+   */
+  basis?: 'P' | 'F';
   inputs: Variable[];
   /** Recibe las tasas en decimal. */
   solve: (values: Record<Variable, number>) => number;
@@ -48,15 +53,15 @@ export const compoundModule: SolveForModule = {
 
 export const ordinaryAnnuityModule: SolveForModule = {
   periodLabel: 'Periodicidad de los pagos',
-  labels: { A: 'Anualidad (A)' },
+  labels: { A: 'Anualidad (A)', n: 'Tiempo (n)' },
   defaults: { A: '500000', i: '1,5', n: '24', P: '10015202,68', F: '14316760,40' },
   unknowns: [
-    { id: 'P', label: 'Valor presente (P)', result: 'P', inputs: ['A', 'i', 'n'], solve: (v) => finance.ordinaryAnnuityPresentValue(v.A, v.i, v.n) },
     { id: 'F', label: 'Valor futuro (F)', result: 'F', inputs: ['A', 'i', 'n'], solve: (v) => finance.ordinaryAnnuityFutureValue(v.A, v.i, v.n) },
-    { id: 'A-P', label: 'Anualidad (A) a partir de P', result: 'A', inputs: ['P', 'i', 'n'], solve: (v) => finance.ordinaryAnnuityPaymentFromPresent(v.P, v.i, v.n) },
-    { id: 'A-F', label: 'Anualidad (A) a partir de F', result: 'A', inputs: ['F', 'i', 'n'], solve: (v) => finance.ordinaryAnnuityPaymentFromFuture(v.F, v.i, v.n) },
-    { id: 'n-P', label: 'Número de periodos (n) a partir de P', result: 'n', inputs: ['P', 'A', 'i'], solve: (v) => finance.ordinaryAnnuityPeriodsFromPresent(v.P, v.A, v.i) },
-    { id: 'n-F', label: 'Número de periodos (n) a partir de F', result: 'n', inputs: ['F', 'A', 'i'], solve: (v) => finance.ordinaryAnnuityPeriodsFromFuture(v.F, v.A, v.i) },
+    { id: 'P', label: 'Valor presente (P)', result: 'P', inputs: ['A', 'i', 'n'], solve: (v) => finance.ordinaryAnnuityPresentValue(v.A, v.i, v.n) },
+    { id: 'A-P', label: 'Anualidad (A) a partir de P', result: 'A', basis: 'P', inputs: ['P', 'i', 'n'], solve: (v) => finance.ordinaryAnnuityPaymentFromPresent(v.P, v.i, v.n) },
+    { id: 'A-F', label: 'Anualidad (A) a partir de F', result: 'A', basis: 'F', inputs: ['F', 'i', 'n'], solve: (v) => finance.ordinaryAnnuityPaymentFromFuture(v.F, v.i, v.n) },
+    { id: 'n-P', label: 'Tiempo (n) a partir de P', result: 'n', basis: 'P', inputs: ['P', 'A', 'i'], solve: (v) => finance.ordinaryAnnuityPeriodsFromPresent(v.P, v.A, v.i) },
+    { id: 'n-F', label: 'Tiempo (n) a partir de F', result: 'n', basis: 'F', inputs: ['F', 'A', 'i'], solve: (v) => finance.ordinaryAnnuityPeriodsFromFuture(v.F, v.A, v.i) },
   ],
 };
 

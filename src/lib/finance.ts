@@ -256,13 +256,13 @@ export function ordinaryAnnuityFutureValue(A: number, i: number, n: number) {
 /** A = P[i(1+i)^n / ((1+i)^n − 1)] */
 export function ordinaryAnnuityPaymentFromPresent(P: number, i: number, n: number) {
   requireAnnuityInputs(P, 'El valor presente', i, n);
-  return checkResult(P / presentValueFactor(i, n));
+  return checkResult(P * ((i * (1 + i) ** n) / ((1 + i) ** n - 1)));
 }
 
 /** A = F[i / ((1+i)^n − 1)] */
 export function ordinaryAnnuityPaymentFromFuture(F: number, i: number, n: number) {
   requireAnnuityInputs(F, 'El valor futuro', i, n);
-  return checkResult(F / futureValueFactor(i, n));
+  return checkResult(F * (i / ((1 + i) ** n - 1)));
 }
 
 /** n = −ln(1 − P·i/A) / ln(1+i) */
