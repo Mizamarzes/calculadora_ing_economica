@@ -28,14 +28,13 @@ export type SolveForModule = {
   defaults: Partial<Record<Variable, string>>;
   /** Etiqueta del selector de periodicidad, que fija la unidad de la tasa y de n. */
   periodLabel: string;
-  note: string;
+  note?: string;
 };
 
 export const DEFAULT_PERIODICITY: Periodicity = 'monthly';
 
 export const compoundModule: SolveForModule = {
-  periodLabel: 'Periodicidad (tasa y tiempo)',
-  note: 'La tasa debe ser efectiva vencida y estar en la misma periodicidad que el tiempo.',
+  periodLabel: 'Periodicidad',
   defaults: { P: '1000000', F: '1268241,79', i: '2', n: '12' },
   unknowns: [
     { id: 'F', label: 'Valor futuro (F)', result: 'F', inputs: ['P', 'i', 'n'], solve: (v) => finance.compoundFutureValue(v.P, v.i, v.n) },

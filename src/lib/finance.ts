@@ -151,7 +151,7 @@ const NOMINAL_MV: RateSpec = { kind: 'nominal', periodicity: 'monthly', modality
 
 /** Forma en que se expresa cada indicador y sus puntos adicionales. */
 export const INDICATOR_RATES: Record<Indicator, { indicator: RateSpec; spread: RateSpec }> = {
-  DTF: { indicator: EFFECTIVE_ANNUAL, spread: NOMINAL_TA },
+  DTF: { indicator: NOMINAL_TA, spread: NOMINAL_TA },
   IBR: { indicator: NOMINAL_MV, spread: NOMINAL_MV },
   IPC: { indicator: EFFECTIVE_ANNUAL, spread: EFFECTIVE_ANNUAL },
 };
@@ -178,10 +178,8 @@ export function indexRate(indicator: Indicator, indicatorRate: number, spread: n
   requireNonNegative(spread, 'El valor de los puntos adicionales');
 
   switch (indicator) {
-    case 'DTF': {
-      const dtfTA = convertRate(indicatorRate, EFFECTIVE_ANNUAL, NOMINAL_TA);
-      return { value: dtfTA + spread, spec: NOMINAL_TA, indicatorValue: dtfTA };
-    }
+    case 'DTF':
+      return { value: indicatorRate + spread, spec: NOMINAL_TA, indicatorValue: indicatorRate };
     case 'IBR':
       return { value: indicatorRate + spread, spec: NOMINAL_MV, indicatorValue: indicatorRate };
     case 'IPC':

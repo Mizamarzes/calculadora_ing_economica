@@ -111,18 +111,16 @@ En DTF e IBR los puntos se **suman** cuando indicador y spread están en la mism
 
 $$j_{total} = j_{indicador} + \text{spread}$$
 
-- **DTF:** se publica como tasa E.A. y los créditos se pactan como "DTF + s T.A." (trimestre anticipado). Pasos:
-  1. DTF E.A. → periódica trimestral vencida: $i_v = (1+DTF)^{1/4} - 1$
-  2. → trimestral anticipada: $i_a = i_v/(1+i_v)$
-  3. → nominal T.A.: $j = 4\,i_a$
-  4. Sumar el spread: $j_{total} = j + s$
-  5. Convertir $j_{total}$ (T.A.) a la tasa deseada con el módulo 2.
+- **DTF:** la calculadora la recibe directamente en **N.T.A.** (trimestre anticipado), igual que el spread ("DTF + s T.A."). Pasos:
+  1. $j_{total} = DTF_{N.T.A.} + s$
+  2. Convertir $j_{total}$ (N.T.A.) a la tasa deseada con el módulo 2.
+  - Si se tiene la DTF en E.A., primero se pasa a N.T.A. con el módulo 2.
 - **IBR:** se publica como tasa **nominal** (normalmente mes vencido, N.M.V.). Pasos:
   1. $j_{total} = IBR_{N.M.V.} + s$
   2. Convertir $j_{total}$ (N.M.V.) a la tasa deseada con el módulo 2.
 
-**Comprobación (DTF):** DTF $= 9\%$ E.A., spread $= 4$ puntos T.A.
-DTF $= 8,5256\%$ T.A. → $j_{total} = 12,5256\%$ T.A. → $i_a = 3,1314\%$ trimestral → $i_v = 3,2326\%$ trimestral → $13,5711\%$ E.A.
+**Comprobación (DTF):** DTF $= 8,5256\%$ N.T.A. (equivale a $9\%$ E.A.), spread $= 4$ puntos T.A.
+→ $j_{total} = 12,5256\%$ T.A. → $i_a = 3,1314\%$ trimestral → $i_v = 3,2326\%$ trimestral → $13,5711\%$ E.A.
 
 ---
 

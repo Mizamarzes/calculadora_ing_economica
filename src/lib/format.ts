@@ -52,15 +52,14 @@ const numberFormat = (decimals: number) =>
   new Intl.NumberFormat('es-CO', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 
 const moneyFormat = numberFormat(2);
-const rateFormat = numberFormat(4);
 
 export function formatMoney(value: number) {
   return `$ ${moneyFormat.format(value)}`;
 }
 
 /** Recibe la tasa en decimal y la muestra en porcentaje con 4 decimales. */
-export function formatRate(value: number) {
-  return `${rateFormat.format(value * 100)} %`;
+export function formatRate(value: number, decimals = 4) {
+  return `${numberFormat(decimals).format(value * 100)} %`;
 }
 
 export function formatNumber(value: number, decimals = 4) {

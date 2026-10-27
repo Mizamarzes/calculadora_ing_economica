@@ -85,9 +85,11 @@ export function SolveForCalculator({ module }: { module: SolveForModule }) {
             options={PERIODICITIES}
           />
         </Field>
-        <Hint>
-          {module.note} Si la tasa es nominal o anticipada, conviértela primero en «Conversión de Tasas».
-        </Hint>
+        {module.note && (
+          <Hint>
+            {module.note} Si la tasa es nominal o anticipada, conviértela primero en «Conversión de Tasas».
+          </Hint>
+        )}
 
         {unknown.inputs.map((key) => {
           const { label, unit } = VARIABLES[key];

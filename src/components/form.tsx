@@ -92,7 +92,7 @@ export function CalculatorActions({ onCalculate, onClear }: { onCalculate: () =>
 
 export type CalculationResult = {
   /** Variable calculada, p. ej. "Valor futuro (F)". */
-  label: string;
+  label: ReactNode;
   value: string;
   details?: string[];
 };
