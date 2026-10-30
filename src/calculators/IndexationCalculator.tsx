@@ -10,12 +10,14 @@ const indicators: { value: Indicator; label: string }[] = [
   { value: 'DTF', label: 'DTF' },
   { value: 'IBR', label: 'IBR' },
   { value: 'IPC', label: 'IPC' },
+  { value: 'UVR', label: 'UVR' },
 ];
 
 const defaults: Record<Indicator, { indicator: string; spread: string }> = {
   DTF: { indicator: '9', spread: '4' },
   IBR: { indicator: '10', spread: '2' },
   IPC: { indicator: '5', spread: '6' },
+  UVR: { indicator: '5', spread: '6' },
 };
 
 export function IndexationCalculator() {
@@ -38,7 +40,7 @@ export function IndexationCalculator() {
 
   const calculate = () => {
     try {
-      const indexed = indexRate(indicator, readRate(indicatorRate, indicatorLabel), readRate(spread, 'Puntos adicionales'));
+      const indexed = indexRate(indicator, readRate(indicatorRate, indicatorLabel), readRate(spread, 'Spread'));
       setResult({ label: <>Tasa indexada (i<sub>DX</sub>)</>, value: `${formatRate(indexed.value, 2)} ${describeRate(indexed.spec)}` });
       setError(null);
     } catch (caught) {
@@ -63,7 +65,7 @@ export function IndexationCalculator() {
         <Field label={indicatorLabel}>
           <NumberInput value={indicatorRate} onChange={setIndicatorRate} suffix={`% ${describeRate(specs.indicator)}`} />
         </Field>
-        <Field label="Puntos adicionales">
+        <Field label="Spread">
           <NumberInput value={spread} onChange={setSpread} suffix={`% ${describeRate(specs.spread)}`} />
         </Field>
       </div>
