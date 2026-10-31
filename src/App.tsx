@@ -75,9 +75,11 @@ function App() {
           aria-label={active.label}
         >
           <div className="bg-brand-heading px-6 py-[13px] text-center text-xl font-extrabold text-white">{active.label}</div>
-          <div className="px-[18px] py-6 sm:px-[31px] sm:pb-[27px] sm:pt-[29px]" key={active.id}>
-            {active.render()}
-          </div>
+          {calculators.map(({ id, render }) => (
+            <div className="px-[18px] py-6 sm:px-[31px] sm:pb-[27px] sm:pt-[29px]" hidden={id !== active.id} key={id}>
+              {render()}
+            </div>
+          ))}
         </section>
       </div>
     </main>

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Trash2 } from 'lucide-react';
+import { Eraser } from 'lucide-react';
 
 const gridRow = 'grid items-center gap-1.5 sm:grid-cols-[236px_minmax(0,1fr)] sm:gap-2.5';
 const control = 'h-[37px] rounded-[9px] border border-line-field bg-white text-ink-field outline-none transition-[border-color,box-shadow] duration-150';
@@ -84,7 +84,7 @@ export function CalculatorActions({ onCalculate, onClear }: { onCalculate: () =>
         type="button"
         aria-label="Limpiar formulario"
       >
-        <Trash2 size={18} />
+        <Eraser size={22} />
       </button>
     </div>
   );

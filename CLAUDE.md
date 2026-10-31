@@ -33,7 +33,7 @@ The code is split into three layers:
 - `src/calculators/`: the module UIs.
   - Compound interest and the three annuity types have no component of their own. They are config objects in `modules.ts` (`SolveForModule`: which unknowns can be solved, which inputs each needs, and a `solve` fn), all rendered by the generic `SolveForCalculator`. A single periodicity select fixes the unit of both `i` and `n`, so rate/time coherence holds by construction. Rates there must be effective vencida for that period. Nominal or anticipated rates go through the conversion module first.
   - Rate conversion and indexation are custom components.
-  - `App.tsx` maps the nav cards to modules and remounts the panel (`key`) when you switch, which resets form state.
+  - `App.tsx` maps the nav cards to modules. All panels stay mounted and only the active one is visible (`hidden`), so each module keeps its form state when you switch.
 
 Shared form pieces (`Field`, `NumberInput`, `Select`, `ResultPanel`, …) are in `src/components/form.tsx`. Styling uses semantic design tokens defined in `tailwind.config.js` (`page`, `ink.*`, `line.*`, `brand.*`, `tone.*`, `icon.*`, custom `shadow-*`), and custom breakpoints (`sm: 561px`, `md: 801px`, `lg: 1024px`) that differ from Tailwind defaults. Use these tokens rather than raw hex colors.
 
